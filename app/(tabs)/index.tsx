@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import tweets from '@/assets/data/tweets';
-import Tweet from '@/components/Tweet'; // Ajuste feito aqui
+import Tweet from '@/components/Tweet'; 
 import { Entypo } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 

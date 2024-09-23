@@ -8,7 +8,7 @@ export default function UserProfileScreen() {
   const user = {
     name: 'Artur',
     email: 'artur.moraes@gmail.com',
-    bio: 'Desenvolvedor de software. Apaixonado por tecnologia e inovação.',
+    bio: 'Sexo',
   };
 
   return (

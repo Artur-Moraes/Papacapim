@@ -1,24 +1,22 @@
+import React, { useEffect } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
 import 'react-native-reanimated';
-
 import { useColorScheme } from '@/components/useColorScheme';
+import { View, Text, StyleSheet } from 'react-native';
 
 export {
-  // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from 'expo-router';
 
 export const unstable_settings = {
-  // Ensure that reloading on /modal keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: '(tabs)', 
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -27,35 +25,53 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (error) throw error;
+    if (error) {
+      console.error('Erro ao carregar fontes:', error);
+    }
   }, [error]);
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync(); 
     }
   }, [loaded]);
 
   if (!loaded) {
-    return null;
+    return <LoadingScreen />; 
   }
 
-  return <RootLayoutNav />;
+  return <RootLayoutNav />; 
 }
+
+const LoadingScreen = () => (
+  <View style={styles.loadingContainer}>
+    <Text>Carregando...</Text>
+  </View>
+);
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === 'light' ? DefaultTheme : DarkTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        <Stack.Screen name='tweet/[id]' options={{title: 'tweet'}}/>
-        <Stack.Screen name='new-tweet' options={{title: 'New tweet', headerShown: false}}/>
+        <Stack.Screen name="new-tweet" options={{ title: 'New tweet', headerShown: false }} />
+        <Stack.Screen name="signUpScreen" options={{ title: 'Cadastrar', headerShown: true }} />
+        <Stack.Screen name="otherUser" options={{ title: 'Perfil', headerShown: true }} />
       </Stack>
     </ThemeProvider>
   );
 }
+
+

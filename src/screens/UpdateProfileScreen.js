@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react'; 
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { ContextAuth } from '../context/AuthProvider';
 import { api } from '../config/api';
@@ -33,8 +33,8 @@ export default function UpdateProfileScreen({ navigation }) {
       });
 
       if (response.status === 200) {
-        Alert.alert('Usuario atualizado', 'crie uma nova sessão');
-        logout()
+        Alert.alert('Usuário atualizado', 'Crie uma nova sessão');
+        logout();
       }
     } catch (error) {
       console.error(error);
@@ -46,9 +46,33 @@ export default function UpdateProfileScreen({ navigation }) {
     navigation.goBack();
   };
 
+  const handleDeleteAccount = async () => {
+    Alert.alert(
+      'Confirmação',
+      'Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Sim',
+          onPress: async () => {
+            try {
+              const response = await api.delete(`/users/${user.id}`);
+              if (response.status === 200) {
+                Alert.alert('Conta excluída', 'Sua conta foi excluída com sucesso.');
+                logout(); // Desloga o usuário após excluir a conta
+              }
+            } catch (error) {
+              console.error(error);
+              Alert.alert('Erro', 'Não foi possível excluir a conta.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
-
       <Text style={styles.title}>Editar Perfil</Text>
       <TextInput
         style={styles.input}
@@ -73,12 +97,13 @@ export default function UpdateProfileScreen({ navigation }) {
         <Text style={styles.buttonText}>Salvar Alterações</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-        <Text style={styles.cancelButtonText}>Cancelar</Text>
-      </TouchableOpacity>
-
       <TouchableOpacity style={[styles.cancelButton, { backgroundColor: '#28A745', top: 10 }]} onPress={() => logout()}>
         <Text style={styles.cancelButtonText}>Sair da conta</Text>
+      </TouchableOpacity>
+
+      {/* Botão para excluir a conta */}
+      <TouchableOpacity style={[styles.cancelButton, { backgroundColor: '#FF0000', marginTop: 20 }]} onPress={handleDeleteAccount}>
+        <Text style={styles.cancelButtonText}>Excluir Conta</Text>
       </TouchableOpacity>
     </View>
   );
@@ -114,7 +139,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    marginBottom: 10,
   },
   buttonText: {
     color: '#fff',

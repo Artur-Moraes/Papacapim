@@ -1,13 +1,13 @@
-import { Stack } from 'expo-router'
-import React from 'react'
+import React from 'react';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { Stack } from 'expo-router';
 
-export default function _layout() {
-  
+const Layout: React.FC = () => {
   return (
-   <Stack>
-    <Stack.Screen name='index' />
-    <Stack.Screen name='signUpScreen' />
-    
-   </Stack>
-  )
-}
+    <AuthProvider>
+      <Stack />
+    </AuthProvider>
+  );
+};
+
+export default Layout;

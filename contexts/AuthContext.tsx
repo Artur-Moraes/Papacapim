@@ -1,53 +1,45 @@
-import { createContext, ReactNode, useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage'; 
+// contexts/AuthContext.tsx
+import React, { createContext, useContext, useState } from 'react';
+import axios from 'axios';
 
-interface AuthContextProps {
-  token: string | null;
-  setToken: (token: string | null) => void;
-  clearToken: () => void; 
-}
+const AuthContext = createContext({});
 
-export const AuthContext = createContext<AuthContextProps>({
-  token: null,
-  setToken: () => {},
-  clearToken: () => {}, 
-});
+export const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const api = 'https://api.papacapim.just.pro.br';
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadToken = async () => {
-      try {
-        const storedToken = await AsyncStorage.getItem('token');
-        if (storedToken) {
-          setToken(storedToken);
+    const login = async (username, password) => {
+        try {
+            const response = await axios.post(`${api}/login`, {
+                username,
+                password,
+            });
+            setUser(response.data);
+        } catch (error) {
+            console.error('Login error:', error.response.data); // Adicione log para depuração
+            throw new Error('Erro ao fazer login');
         }
-      } catch (error) {
-        console.error('Failed to load token', error);
-      }
     };
 
-    loadToken();
-  }, []);
+    const register = async (name, username, password) => {
+        try {
+            const response = await axios.post(`${api}/register`, {
+                name,
+                username,
+                password,
+            });
+            setUser(response.data);
+        } catch (error) {
+            console.error('Registration error:', error.response.data); // Adicione log para depuração
+            throw new Error('Erro ao cadastrar. Verifique os dados.');
+        }
+    };
 
-  const saveToken = async (newToken: string | null) => {
-    setToken(newToken);
-    if (newToken) {
-      await AsyncStorage.setItem('token', newToken); 
-    } else {
-      await AsyncStorage.removeItem('token'); 
-    }
-  };
+    return (
+        <AuthContext.Provider value={{ user, login, register }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
 
-  const clearToken = async () => {
-    setToken(null);
-    await AsyncStorage.removeItem('token'); 
-  };
-
-  return (
-    <AuthContext.Provider value={{ token, setToken: saveToken, clearToken }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
+export const useAuth = () => useContext(AuthContext);

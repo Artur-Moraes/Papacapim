@@ -6,40 +6,56 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const api = 'https://api.papacapim.just.pro.br';
+    const [token, setToken] = useState(null); // Adicionei estado para o token
 
-    const login = async (username, password) => {
+    const login = async (login, password) => {
         try {
-            const response = await axios.post(`${api}/login`, {
-                username,
+            const response = await axios.post('https://api.papacapim.just.pro.br/sessions', {
+                login,
                 password,
             });
-            setUser(response.data);
+            setToken(response.data.token); 
+            setUser(response.data.user_login); 
+
+            axios.defaults.headers.common['x-session-token'] = response.data.token;
+
+            return response.data; 
         } catch (error) {
-            console.error('Login error:', error.response.data); // Adicione log para depuração
-            throw new Error('Erro ao fazer login');
+            throw error.response.data; 
         }
     };
 
-    const register = async (name, username, password) => {
+    const register = async (name, login, password, passwordConfirmation) => {
         try {
-            const response = await axios.post(`${api}/register`, {
-                name,
-                username,
-                password,
+            const response = await axios.post('https://api.papacapim.just.pro.br/users', {
+                user: {
+                    login,
+                    name,
+                    password,
+                    password_confirmation: passwordConfirmation,
+                },
             });
-            setUser(response.data);
+            setUser(response.data); 
+            return response.data; 
         } catch (error) {
-            console.error('Registration error:', error.response.data); // Adicione log para depuração
-            throw new Error('Erro ao cadastrar. Verifique os dados.');
+            throw error.response.data; 
         }
+    };
+
+
+    const logout = () => {
+        setUser(null);
+        setToken(null);
+        delete axios.defaults.headers.common['x-session-token']; 
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, register }}>
+        <AuthContext.Provider value={{ login, register, logout, user, token }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+    return useContext(AuthContext);
+};

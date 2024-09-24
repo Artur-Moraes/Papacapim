@@ -1,64 +1,54 @@
+// app/signUpScreen.tsx
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, Alert, StyleSheet } from 'react-native';
+import { View, TextInput, Button, Text, Alert } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
 import { useRouter } from 'expo-router';
 
 const SignUpScreen = () => {
     const [name, setName] = useState('');
-    const [username, setUsername] = useState('');
+    const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
-    const { register } = useAuth(); 
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const { register } = useAuth();
     const router = useRouter();
 
     const handleSignUp = async () => {
         try {
-            await register(name, username, password);
-            Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
+            await register(name, login, password, passwordConfirmation);
+            Alert.alert('Sucesso', 'Usuário criado com sucesso!');
             router.push('/'); 
         } catch (error) {
-            Alert.alert('Erro', error.message); 
+            Alert.alert('Erro', error.message || 'Erro ao cadastrar usuário.');
         }
     };
 
     return (
-        <View style={styles.container}>
+        <View>
             <TextInput
                 placeholder="Nome"
                 value={name}
                 onChangeText={setName}
-                style={styles.input}
             />
             <TextInput
                 placeholder="Usuário"
-                value={username}
-                onChangeText={setUsername}
-                style={styles.input}
+                value={login}
+                onChangeText={setLogin}
             />
             <TextInput
                 placeholder="Senha"
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
-                style={styles.input}
+            />
+            <TextInput
+                placeholder="Confirme a Senha"
+                secureTextEntry
+                value={passwordConfirmation}
+                onChangeText={setPasswordConfirmation}
             />
             <Button title="Cadastrar" onPress={handleSignUp} />
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        padding: 16,
-    },
-    input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 12,
-        paddingLeft: 8,
-    },
-});
 
 export default SignUpScreen;

@@ -1,41 +1,42 @@
-import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from 'expo-router';
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { Tabs } from 'expo-router'
+import React from 'react'
+import { View } from 'react-native'
+import { AntDesign } from '@expo/vector-icons';
 
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function _layout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: useClientOnlyValue(false, true),
-      }}
-    >
-      <Tabs.Screen
-        name="Feed" 
-        options={{
-          title: 'Feed',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="new-tweet"
-        options={{
-          title: 'Novo Tweet',
-          tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+   <Tabs>
+    <Tabs.Screen name='index' options={{
+      tabBarIcon: ({ size, color }) => (
+        <AntDesign name={"home"} size={30} color={color} />
+      )
+}} />
+    <Tabs.Screen name='DeleteAccountScreen' options={{
+      tabBarIcon: ({ size, color }) => (
+        <AntDesign name={"android"} size={30} color={color} />
+      )
+}} />
+    <Tabs.Screen name='new-tweet' options={{
+      tabBarIcon: ({ size, color }) => (
+        <AntDesign name={"USB"} size={30} color={color} />
+      )
+}} />
+    <Tabs.Screen name='SearchScreen' options={{
+      tabBarIcon: ({ size, color }) => (
+        <AntDesign name={"HTML"} size={30} color={color} />
+      )
+}} />
+    <Tabs.Screen name='UpdateProfileScreen' options={{
+      tabBarIcon: ({ size, color }) => (
+        <AntDesign name={"home"} size={30} color={color} />
+      )
+}} />
+    <Tabs.Screen name='UserProfileScreen' options={{
+      tabBarIcon: ({ size, color }) => (
+        <AntDesign name={"API"} size={30} color={color} />
+      )
+}} />
+    
+   </Tabs>
+  )
 }

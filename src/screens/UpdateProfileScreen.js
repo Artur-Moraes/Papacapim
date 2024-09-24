@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'reac
 import { ContextAuth } from '../context/AuthProvider';
 import { api } from '../config/api';
 
-export default function EditProfileScreen({ navigation }) {
+export default function UpdateProfileScreen({ navigation }) {
   const { logout, user } = useContext(ContextAuth);
   const [newUsername, setNewUsername] = useState('');
   const [newName, setNewName] = useState('');
@@ -77,7 +77,7 @@ export default function EditProfileScreen({ navigation }) {
         <Text style={styles.cancelButtonText}>Cancelar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.cancelButton, { backgroundColor: 'red', top: 10 }]} onPress={() => logout()}>
+      <TouchableOpacity style={[styles.cancelButton, { backgroundColor: '#28A745', top: 10 }]} onPress={() => logout()}>
         <Text style={styles.cancelButtonText}>Sair da conta</Text>
       </TouchableOpacity>
     </View>
@@ -87,21 +87,21 @@ export default function EditProfileScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E8F5E9',
     paddingHorizontal: 20,
     justifyContent: 'center',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#1DA1F2',
+    color: '#28A745',
     marginBottom: 20,
     textAlign: 'center',
   },
   input: {
     width: '100%',
     height: 50,
-    borderColor: '#ccc',
+    borderColor: '#28A745', 
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 15,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     height: 50,
-    backgroundColor: '#1DA1F2',
+    backgroundColor: '#FFA500', 
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   cancelButton: {
     width: '100%',
     height: 50,
-    backgroundColor: '#657786',
+    backgroundColor: '#00A999',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,

@@ -4,9 +4,9 @@ import { AntDesign } from '@expo/vector-icons';
 
 import { StatusBar } from 'expo-status-bar';
 import FeedScreen from '../../screens/FeedScren';
-import EditProfileScreen from '../../screens/EditProfileScreen';
+import UpdateProfileScreen from '../../screens/UpdateProfileScreen';
 import { colorPrimay } from '../../constants/colorPalety';
-import SearchUsersScreen from '../../screens/SeachUSer';
+import SearchUsersScreen from '../../screens/SeachUser';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +25,7 @@ export default function TabNavigator() {
 
             if (route.name === 'FeedScreen') {
               iconName = 'home';
-            } else if (route.name === 'EditProfileScreen') {
+            } else if (route.name === 'UpdateProfileScreen') {
               iconName = 'user';
             } else if (route.name === 'SearchUsersScreen') {
               iconName = 'search1';
@@ -45,7 +45,7 @@ export default function TabNavigator() {
 
 
 
-        <Tab.Screen name="EditProfileScreen" component={EditProfileScreen} options={{
+        <Tab.Screen name="UpdateProfileScreen" component={UpdateProfileScreen} options={{
           headerStyle: {
             backgroundColor: "#fff2",
           },

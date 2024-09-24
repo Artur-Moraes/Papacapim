@@ -74,7 +74,7 @@ export default function PostScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E8F5E9', // Fundo verde claro
     paddingHorizontal: 20,
   },
   textArea: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   button: {
-    backgroundColor: '#1DA1F2',
+    backgroundColor: '#FFA500', // Laranja como cor secundária
     paddingVertical: 15,
     borderRadius: 5,
     alignItems: 'center',
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#1DA1F2',
+    color: '#28A745', // Verde como cor primária
   },
   commentInput: {
     height: 60,

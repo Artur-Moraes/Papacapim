@@ -6,8 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ContextAuth } from '../context/AuthProvider';
 
 export default function LoginScreen({ navigation }) {
-  const [username, setUsername] = useState('mateus50');
-  const [password, setPassword] = useState('123456');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const { user, setUser } = useContext(ContextAuth);
 
   
@@ -63,13 +63,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#E8F5E9', 
     paddingHorizontal: 20,
   },
   logo: {
     fontSize: 36,
     fontWeight: 'bold',
-    color: '#1DA1F2',
+    color: '#28A745', 
     marginBottom: 20,
   },
   input: {
@@ -80,11 +80,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 15,
     paddingHorizontal: 10,
+    backgroundColor: '#F0FFF0', 
   },
   button: {
     width: '100%',
     height: 50,
-    backgroundColor: '#1DA1F2',
+    backgroundColor: '#FFA500', 
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
@@ -94,7 +95,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   linkText: {
-    color: '#1DA1F2',
+    color: '#28A745', 
     marginTop: 15,
   },
 });
+

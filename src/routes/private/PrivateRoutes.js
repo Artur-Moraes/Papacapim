@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 export default function PrivateRoutes() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="TabNavigator" component={TabNavigator} />
+            <Stack.Screen name="Papacapim" component={TabNavigator} />
             <Stack.Screen name="UserProfileScreen" component={UserProfileScreen} />
         </Stack.Navigator>
     )

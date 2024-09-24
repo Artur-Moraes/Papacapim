@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import { View, TextInput, Button, FlatList, Text, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native';
 import { api } from '../config/api';
 
@@ -20,7 +20,7 @@ export default function SearchUsersScreen() {
       <Text style={styles.userText}>Nome: {item.name}</Text>
       <Text style={styles.userText}>Login: {item.login}</Text>
       <TouchableOpacity style={styles.followButton} onPress={() => {
-            ToastAndroid.show('Voce esta sequinto esse usuario!', ToastAndroid.SHORT);
+            ToastAndroid.show('Você está seguindo', ToastAndroid.SHORT);
       }}>
         <Text style={styles.followButtonText}>Seguir</Text>
       </TouchableOpacity>
@@ -31,16 +31,18 @@ export default function SearchUsersScreen() {
     <View style={styles.container}>
       <TextInput 
         style={styles.input} 
-        placeholder="Search Users" 
+        placeholder="Buscar Usuários" 
         value={searchQuery} 
-        onKeyPress={handleSearch}
         onChangeText={setSearchQuery} 
+        onSubmitEditing={handleSearch} // Altera para o evento correto
       />
-      <FlatList 
-        data={users}
-        renderItem={renderItem}
-        keyExtractor={(item) => item?.id?.toString()}
-      />
+      <View style={styles.listContainer}>
+        <FlatList 
+          data={users}
+          renderItem={renderItem}
+          keyExtractor={(item) => item?.id?.toString()}
+        />
+      </View>
     </View>
   );
 }
@@ -48,20 +50,24 @@ export default function SearchUsersScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start', // Alinha os itens no topo
+    justifyContent: 'flex-start', 
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#E8F5E9', 
     paddingHorizontal: 20,
-    paddingTop: 50, // Para colocar o input no topo
+    paddingTop: 50, 
   },
   input: {
     width: '100%',
     height: 50,
-    borderColor: '#ccc',
+    borderColor: '#28A745', 
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 15,
     paddingHorizontal: 10,
+  },
+  listContainer: {
+    width: '100%',
+    flex: 0.75, // Define a altura da lista como 75% da tela
   },
   userContainer: {
     backgroundColor: '#f9f9f9',
@@ -75,7 +81,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   followButton: {
-    backgroundColor: '#1DA1F2',
+    backgroundColor: '#FFA500', 
     paddingVertical: 10,
     borderRadius: 5,
     alignItems: 'center',

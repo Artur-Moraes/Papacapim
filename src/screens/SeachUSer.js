@@ -1,10 +1,11 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';  
 import { View, TextInput, Button, FlatList, Text, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native';
 import { api } from '../config/api';
 
 export default function SearchUsersScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [users, setUsers] = useState([]);
+  const [following, setFollowing] = useState([]); 
 
   const handleSearch = async () => {
     try {
@@ -15,14 +16,44 @@ export default function SearchUsersScreen() {
     }
   };
 
+  const handleFollow = async (login) => {
+    try {
+      if (following.includes(login)) {
+        const followerId = 1; 
+        await api.delete(`/users/${login}/followers/${followerId}`);
+        setFollowing(following.filter((user) => user !== login)); 
+        ToastAndroid.show(`Você deixou de seguir ${login}`, ToastAndroid.SHORT);
+      } else {
+        const response = await api.post(`/users/${login}/followers`);
+        if (response.status === 201) {
+          setFollowing([...following, login]); 
+          ToastAndroid.show(`Você está seguindo ${login}`, ToastAndroid.SHORT);
+        }
+      }
+    } catch (error) {
+      console.error(error.response.data); 
+      if (error.response) {
+        ToastAndroid.show(
+          error.response.data.message || 'Erro ao seguir/deixar de seguir o usuário',
+          ToastAndroid.SHORT
+        );
+      } else {
+        ToastAndroid.show('Erro de conexão', ToastAndroid.SHORT);
+      }
+    }
+  };
+
   const renderItem = ({ item }) => (
     <View style={styles.userContainer}>
       <Text style={styles.userText}>Nome: {item.name}</Text>
       <Text style={styles.userText}>Login: {item.login}</Text>
-      <TouchableOpacity style={styles.followButton} onPress={() => {
-            ToastAndroid.show('Você está seguindo', ToastAndroid.SHORT);
-      }}>
-        <Text style={styles.followButtonText}>Seguir</Text>
+      <TouchableOpacity 
+        style={styles.followButton} 
+        onPress={() => handleFollow(item.login)}
+      >
+        <Text style={styles.followButtonText}>
+          {following.includes(item.login) ? 'Deixar de Seguir' : 'Seguir'}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -34,7 +65,7 @@ export default function SearchUsersScreen() {
         placeholder="Buscar Usuários" 
         value={searchQuery} 
         onChangeText={setSearchQuery} 
-        onSubmitEditing={handleSearch} // Altera para o evento correto
+        onSubmitEditing={handleSearch} 
       />
       <View style={styles.listContainer}>
         <FlatList 
@@ -67,7 +98,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     width: '100%',
-    flex: 0.75, // Define a altura da lista como 75% da tela
+    flex: 0.75, 
   },
   userContainer: {
     backgroundColor: '#f9f9f9',

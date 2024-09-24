@@ -3,6 +3,7 @@ import React from 'react';
 import { Image } from 'react-native';
 import TabNavigator from './TabNavigator';
 import UserProfileScreen from '../../screens/UserProfileScreen';
+import PostScreen from '../../screens/PostScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ export default function PrivateRoutes() {
                 component={UserProfileScreen} 
                 options={{ title: 'Perfil do Usuário' }} 
             />
+            <Stack.Screen name='PostScreen' component={PostScreen}/>
         </Stack.Navigator>
     );
 }

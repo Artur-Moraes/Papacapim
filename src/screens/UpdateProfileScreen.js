@@ -101,7 +101,7 @@ export default function UpdateProfileScreen({ navigation }) {
         <Text style={styles.cancelButtonText}>Sair da conta</Text>
       </TouchableOpacity>
 
-      {/* Botão para excluir a conta */}
+
       <TouchableOpacity style={[styles.cancelButton, { backgroundColor: '#FF0000', marginTop: 20 }]} onPress={handleDeleteAccount}>
         <Text style={styles.cancelButtonText}>Excluir Conta</Text>
       </TouchableOpacity>

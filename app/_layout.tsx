@@ -65,10 +65,10 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === 'light' ? DefaultTheme : DarkTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
         <Stack.Screen name="new-tweet" options={{ title: 'New tweet', headerShown: false }} />
         <Stack.Screen name="signUpScreen" options={{ title: 'Cadastrar', headerShown: true }} />
         <Stack.Screen name="otherUser" options={{ title: 'Perfil', headerShown: true }} />
+        {/* Adicione outras rotas conforme necessário */}
       </Stack>
     </ThemeProvider>
   );

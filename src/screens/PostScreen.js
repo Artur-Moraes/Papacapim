@@ -20,7 +20,7 @@ export default function NewPostScreen({ navigation }) {
 
       if (response.status === 201) {
         Alert.alert('Sucesso', 'Postagem criada com sucesso!');
-        navigation.goBack(); 
+        navigation.goBack();
       }
     } catch (error) {
       console.error(error);
@@ -48,27 +48,27 @@ export default function NewPostScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8F5E9', 
+    backgroundColor: '#E8F5E9',
     padding: 20,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#28A745', 
+    color: '#28A745',
     marginBottom: 20,
     textAlign: 'center',
   },
   input: {
     height: 150,
-    borderColor: '#28A745', 
+    borderColor: '#28A745',
     borderWidth: 1,
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,
-    textAlignVertical: 'top', 
+    textAlignVertical: 'top',
   },
   postButton: {
-    backgroundColor: '#FFA500', 
+    backgroundColor: '#FFA500',
     paddingVertical: 15,
     borderRadius: 5,
     alignItems: 'center',
